@@ -63,4 +63,22 @@ public class ServerDao {
 		}
 	}
 
+	public ServerStack getServerStack(int serverId) {
+		
+		String query = "select stackid, temperature from serverstack, server where server.stack_id = serverstack.stackid and server.id=" + serverId;
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			
+			if(resultSet.next()) {
+				int stackId = resultSet.getInt(1);
+				float temp = resultSet.getFloat(2);
+				
+				ServerStack serverStack = new ServerStack(stackId, temp);
+				return serverStack;
+			} else {
+				return null;
+			}
+		}
+	}
 }
