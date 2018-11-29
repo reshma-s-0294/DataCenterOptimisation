@@ -1,19 +1,19 @@
 package com.ucc.dc.models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Task {
 	
 	private int taskId;
 	private String taskName;
-	private Date arrivalTime;
 	private int deadline;
 	private int serverId;
+	private Timestamp arrivalTime;
 	
-	public Task(String taskName, Date arrivalTime, int deadline) {
+	public Task(String taskName, int deadline) {
 		super();
 		this.taskName = taskName;
-		this.arrivalTime = arrivalTime;
 		this.deadline = deadline;
 	}
 	
@@ -29,10 +29,10 @@ public class Task {
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
-	public Date getArrivalTime() {
+	public Timestamp getArrivalTime() {
 		return arrivalTime;
 	}
-	public void setArrivalTime(Date arrivalTime) {
+	public void setArrivalTime(Timestamp arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 	public int getDeadline() {

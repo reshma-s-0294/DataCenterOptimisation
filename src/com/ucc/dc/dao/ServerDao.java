@@ -1,6 +1,7 @@
 package com.ucc.dc.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class ServerDao {
 	DBManager dbManager = new DBManager();
 	Connection connection = dbManager.getConnection();
 	
-	public List<Server> getServers(){
+	public ArrayList<Server> getServers(){
 		
 		ArrayList<Server> serverList = new ArrayList<>();
 		
@@ -44,6 +45,22 @@ public class ServerDao {
 			System.out.println(e.getMessage());
 		}
 		return null;
+	}
+	
+	public void increaseUtilizationAndCapacity(Server server) {
+		String query = "update server set utilization = ?, capacity = ?, taskscompleted = ? where id = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getUtilization()+10);
+			preparedStatement.setInt(2, server.getCapacity()+20);
+			preparedStatement.setInt(3, server.getTasksCompleted()+1);
+			preparedStatement.setInt(4, server.getId());
+			
+			preparedStatement.executeQuery();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 }
