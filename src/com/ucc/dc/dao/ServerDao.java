@@ -76,9 +76,9 @@ public class ServerDao {
 				
 				ServerStack serverStack = new ServerStack(stackId, temp);
 				return serverStack;
-			} else {
-				return null;
 			}
+		} catch(Exception e) {
+			// TODO: handle exception
 		}
 	}
 }
