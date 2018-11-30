@@ -54,13 +54,14 @@ public class TaskDao {
 	}
 	
 	public void updateTask(Task task) {
-		String query = "update task set server_id = ? where task_id = ?";
+		String query = "update task set server_id = ?, processed = ? where task_id = ?";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			
 			preparedStatement.setInt(1, task.getServerId());
-			preparedStatement.setInt(2, task.getTaskId());
+			preparedStatement.setBoolean(2, true);
+			preparedStatement.setInt(3, task.getTaskId());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -72,6 +73,19 @@ public class TaskDao {
 		try {
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void setProcessedBit(Task task) {
+		String query = "update table task set processed = ? where task_id = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setBoolean(1, true);
+			preparedStatement.setInt(2, task.getTaskId());
+			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

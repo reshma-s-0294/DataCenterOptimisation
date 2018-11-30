@@ -22,15 +22,21 @@ public class TaskService {
 		System.out.println("this is the number of servers: "+serverList.size());
 		for (Server server : serverList) {
 			if (server.getUtilization() > 50 || server.getCapacity() >= 100) {
+				System.out.println(server.getUtilization() +"*********"+server.getCapacity());
 				continue;
 			} else {
+				System.out.println("in else part!!!!!!!!!!!!!!!!!!!" +server.toString());
 				serverDao.increaseUtilizationAndCapacity(server);
+				System.out.println("after increasing capacity: ");
+				
 				task.setServerId(server.getId());
 				taskDao.updateTask(task);
+				//taskDao.setProcessedBit(task);
 				serverStackDao.increaseTemp(server);
 				if (serverStackDao.checkTemp(server).getTemperature() > 50) {
 					serverStackDao.turnOnHVAC(server);
 				}
+				
 				return true;
 			}
 		}
@@ -43,19 +49,22 @@ public class TaskService {
 		System.out.println("This is the numbe rof tasks: "+tasks.size());
 		Collections.sort(tasks);
 		ArrayList<Task> unassignedTasks = new ArrayList<>();
+		ArrayList<Task> processedTasks = new ArrayList<>();
 		if (tasks.size() > 0) {
-			for (Iterator<Task> task =  tasks.iterator() ; task.hasNext();) {
-				Task t = task.next();
-				if (!assignTask(t)) {
-					unassignedTasks.add(t);
-				} else {
-					task.remove();
+			Iterator<Task> iterator = tasks.iterator();
+			while(iterator.hasNext()) {
+				Task currentTask = iterator.next();
+				if(!assignTask(currentTask)) {
+					unassignedTasks.add(currentTask);
+				}else {
+					processedTasks.add(currentTask);
+					iterator.remove();
 				}
 			}
 			System.out.println("Tasks assigned");
 		}
-		System.out.println("*****************"+tasks.size());
-		return tasks;
+		System.out.println("*****************"+processedTasks.size());
+		return processedTasks;
 
 	}
 

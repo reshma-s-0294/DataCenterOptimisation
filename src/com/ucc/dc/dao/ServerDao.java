@@ -57,7 +57,7 @@ public class ServerDao {
 			preparedStatement.setInt(3, server.getTasksCompleted()+1);
 			preparedStatement.setInt(4, server.getId());
 			
-			preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
