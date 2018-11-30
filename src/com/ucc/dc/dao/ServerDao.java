@@ -63,7 +63,7 @@ public class ServerDao {
 		}
 	}
 
-	public ServerStack getServerStack(int serverId) {
+	/*public ServerStack getServerStack(int serverId) {
 		
 		String query = "select stackid, temperature from serverstack, server where server.stack_id = serverstack.stackid and server.id=" + serverId;
 		try {
@@ -80,5 +80,5 @@ public class ServerDao {
 		} catch(Exception e) {
 			// TODO: handle exception
 		}
-	}
+	}*/
 }
