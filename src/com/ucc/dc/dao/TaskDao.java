@@ -67,5 +67,15 @@ public class TaskDao {
 			// TODO: handle exception
 		}
 	}
+	
+	public void deleteAllTasks() {
+		String query = "delete from task";
+		try {
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 }
