@@ -20,62 +20,35 @@
 </head>
 <body>
 <h1>Data Center Incoming Task and Processing</h1>
- <input type="text" id="name" placeholder="Task Name">
-        <input type="text" id="deadline" placeholder="Deadline">
-    	<input type="button" class="add-row" value="Add Task">
-<form action="guru_register" method="post">
+
+<form action="${pageContext.request.contextPath}/InsertTask" method="post">
+	<input type="text" id="name" placeholder="Task Name" name="name">
+	<input type="text" id="deadline" placeholder="Deadline" name="deadline">
+	<input type="submit" value="Add Task" />
+	</form>
+<form action="${pageContext.request.contextPath}/InsertTask" method="get">
+<input type="submit" value="Process added tasks" >
+
+<input type="text" id="processingtasklabel" name="processingtasklabel" value='<%=request.getAttribute("processingtasklabel")%>'>
+
 <table>
-  <tr>
-    <th>Task Id</th>
-    <th>Task</th>
-    <th>Deadline</th>
-  </tr>
-  <tbody>
-  <tr>
-    <td >1</td>
-    <td contenteditable="true">Task 1</td>
-    <td contenteditable="true">10 ms</td>
-  </tr>
-  </tbody>
-  <tbody>
-  <tr>
-    <td contenteditable="true">2</td>
-    <td contenteditable="true">Task 2</td>
-    <td contenteditable="true">11 ms</td>
-  </tr>
-  </tbody>
-  <tbody>
-  <tr>
-    <td>3</td>
-    <td contenteditable="true">Task 3</td>
-    <td contenteditable="true">15ms</td>
-  </tr>
-  </tbody>
-  <tbody>
-  <tr>
-    <td>4</td>
-    <td contenteditable="true">Task 4</td>
-    <td contenteditable="true">2 ms</td>
-  </tr>
-  </tbody>
-  <tbody>
-  <tr>
-    <td>5</td>
-    <td contenteditable="true">Task 5</td>
-    <td contenteditable="true">8 ms</td>
-  </tr>
-  </tbody>
-  <tbody>
-  <tr>
-    <td>6</td>
-    <td contenteditable="true">Task 6</td>
-    <td contenteditable="true">7 ms</td>
-  </tr>
-  </tbody>
+
+  <c:forEach items="${processedTasks}" var="processedTask">
+    <tr>
+    <td>${processedTask.taskName}</td>
+    </tr>
+  </c:forEach>
 </table>
-<input type="submit" value="Submit" /></form>
+
+
+</form>
+
+
 </body>
 </html>
+<%
+
+%>
 <style>
 table {
     font-family: arial, sans-serif;

@@ -44,7 +44,7 @@ public class ServerDao {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		return null;
+		return serverList;
 	}
 	
 	public void increaseUtilizationAndCapacity(Server server) {
