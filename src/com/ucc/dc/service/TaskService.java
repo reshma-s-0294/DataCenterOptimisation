@@ -54,6 +54,7 @@ public class TaskService {
 				if(!assignTask(currentTask)) {
 					unassignedTasks.add(currentTask);
 				}else {
+					currentTask.setProcessed(true);
 					processedTasks.add(currentTask);
 					iterator.remove();
 				}

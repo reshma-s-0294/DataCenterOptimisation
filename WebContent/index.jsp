@@ -49,7 +49,7 @@ ${taskAddedToQueue}
      <input type="submit" value="Process Task" name="processingTask" >
 </div>
 
-<label font-size: x-large; font-weight: bold; padding-bottom: 39px; color: cadetblue;> ${processingtasklabel} <label>
+<label font-size: x-large; font-weight: bold; padding-bottom: 39px; color: cadetblue;> ${processingtasklabel} </label>
 
 </form>
 
@@ -59,20 +59,15 @@ ${taskAddedToQueue}
      <input type="submit" value="Get System Status" name="getHvacStatus" >
 </div>
 <table>
-<tbody>
-    <tr>
-    <td>TASK NAME</td>
-    <td>DEADLINE</td>
-    <td>SERVER ID</td>
-    <td>Processed ID</td>
-    </tr>
-  
-  </tbody>
-</table>
-<table>
 
 <table>
 <tbody>
+ <tr>
+    <td>TASK NAME</td>
+    <td>DEADLINE</td>
+    <td>SERVER ID</td>
+    <td>Processed</td>
+    </tr>
   <c:forEach items="${processedTasks}" var="processedTask">
     <tr>
     <td>${processedTask.taskName}</td>
@@ -85,18 +80,16 @@ ${taskAddedToQueue}
   </tbody>
 </table>
 
+<br>
+<br>
+<label font-size: x-large; font-weight: bold; padding-bottom: 39px; color: cadetblue;>Current HVAC Status<label>
 <table>
 <tbody>
-    <tr>
+ <tr>
     <td>HVAC ID</td>
     <td>HVAC STATUS</td>
     <td>STACK ID</td>
     </tr>
-  
-  </tbody>
-</table>
-<table>
-<tbody>
   <c:forEach items="${hvacStatus}" var="hvac">
     <tr>
     <td>${hvac.hvacId}</td>

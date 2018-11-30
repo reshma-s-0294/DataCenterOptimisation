@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ucc.dc.dao.ServerStackDao;
 import com.ucc.dc.dao.TaskDao;
@@ -30,6 +31,7 @@ public class InsertTask extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
+	ArrayList<Task> processedTasks = new ArrayList<Task>();
 	public InsertTask() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -52,23 +54,29 @@ public class InsertTask extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	System.out.println("Processing");
 	TaskService taskService = new TaskService();
-	ArrayList<Task> processedTasks = taskService.processTasks();
-	System.out.println("ProcessTask Length: " + processedTasks.toString());
+	
 	
 	//request.setAttribute("processedTasks", processedTasks);
 	System.out.println(processedTasks);
-	
 	if (request.getParameter("getHvacStatus") != null) {
 		System.out.println("Inside hvac status");
 	   ServerStackDao hvac = new ServerStackDao();
 	   ArrayList<Hvac>hvacStatus = hvac.getHvacStatus();
 	   request.setAttribute("hvacStatus", hvacStatus);
 	   System.out.println("hvacStatus Length: " + hvacStatus.size());
+	   System.out.println("ProcessTask Length in HVAC: " + processedTasks.toString());
 	   request.setAttribute("processedTasks", processedTasks);
+	   //HttpSession session = request.getSession(false);
+	  // Object o = session.getAttribute("processedTasks");
+	   //request.setAttribute("processedTasks", o);
+	  // System.out.println("Session ProcessTask : " + o.toString());
 	}
 	else if (request.getParameter("processingTask") != null) {
 	    // Invoke action 2.
 		 request.setAttribute("Processing Task.....", "processingtasklabel");
+		 processedTasks = taskService.processTasks();
+			System.out.println("ProcessTask Length in Processor: " + processedTasks.toString());
+			
 		System.out.println("Inside process task");
 	}
 	
