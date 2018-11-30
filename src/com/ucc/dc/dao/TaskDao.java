@@ -26,7 +26,7 @@ public class TaskDao {
 			preparedStatement.setBoolean(4, task.isProcessed());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class TaskDao {
 				taskList.add(task);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 		return taskList;
 		
@@ -64,7 +64,7 @@ public class TaskDao {
 			preparedStatement.setInt(3, task.getTaskId());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -74,7 +74,7 @@ public class TaskDao {
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class TaskDao {
 			preparedStatement.setInt(2, task.getTaskId());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 

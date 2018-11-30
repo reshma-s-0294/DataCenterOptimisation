@@ -1,5 +1,6 @@
 <%@page import="java.sql.Date"%>
 <%@page import="com.ucc.dc.models.Task"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,7 +22,7 @@
 <body>
 
 	
-	<div class="form-style-10">
+<div class="form-style-10">
 <h1>Data Center Incoming Task and Processing</span></h1>
 <form action="${pageContext.request.contextPath}/InsertTask" method="post">
     <div class="section"><span>1</span>Incoming Task Details</div>
@@ -45,18 +46,30 @@ ${taskAddedToQueue}
 <form action="${pageContext.request.contextPath}/InsertTask" method="get">
 
  <div class="button-section" style="    padding-top: 20px;">
-     <input type="submit" value="Process added tasks" >
-    </div>
+     <input type="submit" value="Process Task" name="processingTask" >
+</div>
 
-<label font-size: x-large;
-    font-weight: bold;
-    padding-bottom: 39px;
-    color: cadetblue;>
-${processingtasklabel}
-<label>
+<label font-size: x-large; font-weight: bold; padding-bottom: 39px; color: cadetblue;> ${processingtasklabel} <label>
 
+</form>
 
+<form action="${pageContext.request.contextPath}/InsertTask" method="get">
 
+ <div class="button-section" style="    padding-top: 20px;">
+     <input type="submit" value="Get System Status" name="getHvacStatus" >
+</div>
+<table>
+<tbody>
+    <tr>
+    <td>TASK NAME</td>
+    <td>DEADLINE</td>
+    <td>SERVER ID</td>
+    <td>Processed ID</td>
+    </tr>
+  
+  </tbody>
+</table>
+<table>
 
 <table>
 <tbody>
@@ -64,6 +77,31 @@ ${processingtasklabel}
     <tr>
     <td>${processedTask.taskName}</td>
     <td>${processedTask.deadline}</td>
+    <td>${processedTask.serverId}</td>
+    <td>${processedTask.processed}</td>
+    </tr>
+  </c:forEach>
+  
+  </tbody>
+</table>
+
+<table>
+<tbody>
+    <tr>
+    <td>HVAC ID</td>
+    <td>HVAC STATUS</td>
+    <td>STACK ID</td>
+    </tr>
+  
+  </tbody>
+</table>
+<table>
+<tbody>
+  <c:forEach items="${hvacStatus}" var="hvac">
+    <tr>
+    <td>${hvac.hvacId}</td>
+    <td>${hvac.status}</td>
+    <td>${hvac.stackId}</td>
     </tr>
   </c:forEach>
   
@@ -72,13 +110,9 @@ ${processingtasklabel}
 
 
 </form>
-
-
 </body>
 </html>
-<%
 
-%>
 <style>
 table {
     font-family: arial, sans-serif;

@@ -22,6 +22,7 @@ public class ServerStackDao {
 			preparedStatement.setInt(1, server.getStackId());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 	}
@@ -34,6 +35,7 @@ public class ServerStackDao {
 			preparedStatement.setInt(1, server.getStackId());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 	}
@@ -58,6 +60,7 @@ public class ServerStackDao {
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 		return stack;
@@ -78,6 +81,7 @@ public class ServerStackDao {
 				hvacs.add(hvac);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 		return hvacs;

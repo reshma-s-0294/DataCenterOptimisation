@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ucc.dc.dao.ServerStackDao;
 import com.ucc.dc.dao.TaskDao;
+import com.ucc.dc.models.Hvac;
 import com.ucc.dc.models.Task;
 import com.ucc.dc.service.TaskService;
 
@@ -52,9 +54,24 @@ public class InsertTask extends HttpServlet {
 	TaskService taskService = new TaskService();
 	ArrayList<Task> processedTasks = taskService.processTasks();
 	System.out.println("ProcessTask Length: " + processedTasks.toString());
-	request.setAttribute("processingtasklabel","Processing Task........");
-	request.setAttribute("processedTasks", processedTasks);
+	
+	//request.setAttribute("processedTasks", processedTasks);
 	System.out.println(processedTasks);
+	
+	if (request.getParameter("getHvacStatus") != null) {
+		System.out.println("Inside hvac status");
+	   ServerStackDao hvac = new ServerStackDao();
+	   ArrayList<Hvac>hvacStatus = hvac.getHvacStatus();
+	   request.setAttribute("hvacStatus", hvacStatus);
+	   System.out.println("hvacStatus Length: " + hvacStatus.size());
+	   request.setAttribute("processedTasks", processedTasks);
+	}
+	else if (request.getParameter("processingTask") != null) {
+	    // Invoke action 2.
+		 request.setAttribute("Processing Task.....", "processingtasklabel");
+		System.out.println("Inside process task");
+	}
+	
 	RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 	dispatcher.forward(request, response);
 	}
