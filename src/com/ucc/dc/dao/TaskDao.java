@@ -41,7 +41,6 @@ public class TaskDao {
 				String name = resultSet.getString(2);
 				int deadline = resultSet.getInt(3);
 				Timestamp arrival = resultSet.getTimestamp(5);
-				
 				Task task = new Task(name, deadline);
 				task.setTaskId(id);
 				task.setArrivalTime(arrival);

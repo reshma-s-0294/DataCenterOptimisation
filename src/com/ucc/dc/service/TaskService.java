@@ -26,6 +26,9 @@ public class TaskService {
 				task.setServerId(server.getId());
 				taskDao.updateTask(task);
 				serverStackDao.increaseTemp(server);
+				if (serverStackDao.checkTemp(server).getTemperature() > 50) {
+					serverStackDao.turnOnHVAC(server);
+				}
 				return true;
 			}
 		}
@@ -50,6 +53,5 @@ public class TaskService {
 		return tasks;
 
 	}
-	
 
 }

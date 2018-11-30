@@ -4,6 +4,10 @@ public class ServerStack {
 	private float temperature;
 	private int stackId;
 	
+	public ServerStack() {
+		super();
+	}
+
 	public ServerStack(int stackId, float temperature) {
 		super();
 		this.stackId = stackId;
