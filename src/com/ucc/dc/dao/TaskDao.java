@@ -16,14 +16,13 @@ public class TaskDao {
 	Connection connection = dbManager.getConnection();
 	
 	public void insertTask(Task task) {
-		String query = "insert into task(task_name, arrival_time, deadline, server_id) values(?,?,?,?)";
+		String query = "insert into task(task_name, arrival_time, deadline) values(?,?,?)";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, task.getTaskName());
 			preparedStatement.setTimestamp(2, task.getArrivalTime());
 			preparedStatement.setInt(3, task.getDeadline());
-			preparedStatement.setInt(4, task.getServerId());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -31,7 +30,7 @@ public class TaskDao {
 	}
 	
 	public ArrayList<Task> getTasks(){
-		String query = "select * from task";
+		String query = "select * from task where processed = 0";
 		ArrayList<Task> taskList = new ArrayList<>();
 		try {
 			Statement statement = connection.createStatement();

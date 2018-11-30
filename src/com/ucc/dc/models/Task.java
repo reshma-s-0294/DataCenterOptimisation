@@ -10,6 +10,7 @@ public class Task implements Comparable<Task>{
 	private int deadline;
 	private int serverId;
 	private Timestamp arrivalTime;
+	private boolean processed;
 	
 	public Task(String taskName, int deadline) {
 		super();
@@ -47,10 +48,19 @@ public class Task implements Comparable<Task>{
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
 	}
+	
+	public boolean isProcessed() {
+		return processed;
+	}
+
+	public void setProcessed(boolean processed) {
+		this.processed = processed;
+	}
+
 	@Override
 	public String toString() {
-		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", arrivalTime=" + arrivalTime + ", deadline="
-				+ deadline + ", serverId=" + serverId + "]";
+		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", deadline=" + deadline + ", serverId=" + serverId
+				+ ", arrivalTime=" + arrivalTime + ", processed=" + processed + "]";
 	}
 
 	@Override
