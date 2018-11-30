@@ -41,6 +41,8 @@ public class InsertTask extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("");
+		
+		request.setAttribute("taskAddedToQueue","Task Successfully added to Job Queue.... Please wait will analyzer searches for optimal server..!!");
 		processRequest(request, response);
 		forwardRequest(request, response, "/index.jsp");
 	}
@@ -50,7 +52,7 @@ public class InsertTask extends HttpServlet {
 	TaskService taskService = new TaskService();
 	ArrayList<Task> processedTasks = taskService.processTasks();
 	System.out.println("ProcessTask Length: " + processedTasks.toString());
-	request.setAttribute("processingtasklabel","Processing Task");
+	request.setAttribute("processingtasklabel","Processing Task........");
 	request.setAttribute("processedTasks", processedTasks);
 	System.out.println(processedTasks);
 	RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
