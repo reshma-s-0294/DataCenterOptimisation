@@ -3,7 +3,10 @@ package com.ucc.dc.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
+import com.ucc.dc.models.Hvac;
 import com.ucc.dc.models.Server;
 import com.ucc.dc.models.ServerStack;
 
@@ -12,7 +15,7 @@ public class ServerStackDao {
 	Connection connection = dbManager.getConnection();
 	
 	public void increaseTemp(Server server) {
-		String query = "update serverstack set temparature = temperature+10 where stackid = ?";
+		String query = "update serverstack set temperature = temperature+10 where stackid = ?";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -50,6 +53,7 @@ public class ServerStackDao {
 				float temp = resultSet.getFloat(2);
 				stack.setStackId(id);
 				stack.setTemperature(temp);
+				
 				return stack;
 			}
 			
@@ -58,6 +62,25 @@ public class ServerStackDao {
 		}
 		return stack;
 		
+	}
+	
+	public ArrayList<Hvac> getHvacStatus(){
+		String query = "select * from hvac";
+		ArrayList<Hvac> hvacs = new ArrayList<>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()) {
+				int hvacId = resultSet.getInt(1);
+				int stackId = resultSet.getInt(2);
+				boolean status = resultSet.getBoolean(3);
+				Hvac hvac = new Hvac(hvacId, stackId, status);
+				hvacs.add(hvac);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return hvacs;
 	}
 
 }

@@ -19,15 +19,13 @@ public class TaskService {
 
 	public boolean assignTask(Task task) {
 		ArrayList<Server> serverList = serverDao.getServers();
-		System.out.println("this is the number of servers: "+serverList.size());
 		for (Server server : serverList) {
 			if (server.getUtilization() > 50 || server.getCapacity() >= 100) {
-				System.out.println(server.getUtilization() +"*********"+server.getCapacity());
 				continue;
 			} else {
-				System.out.println("in else part!!!!!!!!!!!!!!!!!!!" +server.toString());
+				
 				serverDao.increaseUtilizationAndCapacity(server);
-				System.out.println("after increasing capacity: ");
+				
 				
 				task.setServerId(server.getId());
 				taskDao.updateTask(task);
@@ -46,7 +44,6 @@ public class TaskService {
 	public ArrayList<Task> processTasks() {
 
 		ArrayList<Task> tasks = taskDao.getTasks();
-		System.out.println("This is the numbe rof tasks: "+tasks.size());
 		Collections.sort(tasks);
 		ArrayList<Task> unassignedTasks = new ArrayList<>();
 		ArrayList<Task> processedTasks = new ArrayList<>();
@@ -63,7 +60,6 @@ public class TaskService {
 			}
 			System.out.println("Tasks assigned");
 		}
-		System.out.println("*****************"+processedTasks.size());
 		return processedTasks;
 
 	}

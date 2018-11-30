@@ -35,10 +35,8 @@ public class ServerDao {
 				serverList.add(server);
 				
 			}
-			for(int i = 0; i<serverList.size() ; i++) {
-				
-				System.out.println("this is the server "+i+" list: "+serverList.get(i).toString());
-			}
+			
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
