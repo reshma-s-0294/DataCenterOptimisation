@@ -15,9 +15,9 @@ public class TaskDao {
 	DBManager dbManager = new DBManager();
 	Connection connection = dbManager.getConnection();
 	
-	public void insertTask(Task task) {
+	public int insertTask(Task task) {
 		String query = "insert into task(task_name, arrival_time, deadline, processed) values(?,?,?,?)";
-		
+		int id = 0;
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, task.getTaskName());
@@ -25,9 +25,18 @@ public class TaskDao {
 			preparedStatement.setInt(3, task.getDeadline());
 			preparedStatement.setBoolean(4, task.isProcessed());
 			preparedStatement.executeUpdate();
+			
+			String idQuery = "select task_id from task order by task_id desc limit 1";
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery(idQuery);
+			while(rs.next()) {
+				id = rs.getInt(1);
+			}
+			return id;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		return id;
 	}
 	
 	public ArrayList<Task> getTasks(){
@@ -45,10 +54,12 @@ public class TaskDao {
 				task.setTaskId(id);
 				task.setArrivalTime(arrival);
 				taskList.add(task);
+				
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("+++++++++++++++++"+e.getMessage());
 		}
+		System.out.println("***************************lenght of tasks in DAO: " +taskList.size());
 		return taskList;
 		
 	}

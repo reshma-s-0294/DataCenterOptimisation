@@ -1,6 +1,8 @@
 package com.ucc.dc.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +20,7 @@ import com.ucc.dc.dao.ServerStackDao;
 import com.ucc.dc.dao.TaskDao;
 import com.ucc.dc.models.Hvac;
 import com.ucc.dc.models.Task;
+import com.ucc.dc.models.TaskResponse;
 import com.ucc.dc.service.TaskService;
 
 /**
@@ -27,6 +30,7 @@ import com.ucc.dc.service.TaskService;
 
 public class InsertTask extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	int id;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -46,15 +50,31 @@ public class InsertTask extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("");
 		
+		TaskResponse tr = new TaskResponse();
+		
 		request.setAttribute("taskAddedToQueue","Task Successfully added to Job Queue.... Please wait will analyzer searches for optimal server..!!");
 		processRequest(request, response);
-		forwardRequest(request, response, "/index.jsp");
+		//forwardRequest(request, response, "/index.jsp");
+		TaskService service = new TaskService();
+		ArrayList<Task> pTasks = service.processTasks();
+		for(Task task : pTasks) {
+			if(task.getTaskId() == id) {
+				System.out.println("Task:" + task);
+				tr.setServerId(task.getServerId());
+				break;
+			}
+		}
+		PrintWriter pw = response.getWriter();
+		response.setContentType("application/json");
+		pw.print(tr);
+		pw.flush();
+		
+		
 	}
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	System.out.println("Processing");
 	TaskService taskService = new TaskService();
-	
 	
 	//request.setAttribute("processedTasks", processedTasks);
 	System.out.println(processedTasks);
@@ -86,14 +106,14 @@ public class InsertTask extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(request.getParameter("name"));
+		System.out.println(request.getParameter("name") +"***********"+ request.getParameter("deadline"));
 		Task task = new Task(request.getParameter("name"),Integer.parseInt( request.getParameter("deadline")));
 		TaskDao taskDao = new TaskDao();
 		Calendar calendar = Calendar.getInstance();
 		Timestamp currentTimestamp = new Timestamp(calendar.getTime().getTime());
 		task.setArrivalTime(currentTimestamp);
 		task.setProcessed(false);
-		taskDao.insertTask(task);
+		id = taskDao.insertTask(task);
 		
 		System.out.println(request.getParameter("deadline"));
 	}
