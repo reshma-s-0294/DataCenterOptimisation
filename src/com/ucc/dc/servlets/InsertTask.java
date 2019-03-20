@@ -46,7 +46,7 @@ public class InsertTask extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("");
 		
@@ -106,7 +106,6 @@ public class InsertTask extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(request.getParameter("name") +"***********"+ request.getParameter("deadline"));
 		Task task = new Task(request.getParameter("name"),Integer.parseInt( request.getParameter("deadline")));
 		TaskDao taskDao = new TaskDao();
 		Calendar calendar = Calendar.getInstance();
@@ -115,8 +114,8 @@ public class InsertTask extends HttpServlet {
 		task.setProcessed(false);
 		id = taskDao.insertTask(task);
 		
-		System.out.println(request.getParameter("deadline"));
 	}
+	
 protected void processTask() {
 	System.out.println("Processing");
 	

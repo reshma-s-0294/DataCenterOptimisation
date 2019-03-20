@@ -1,4 +1,4 @@
-package com.ucc.dc.servlets;
+package com.ucc.dc.tests;
 
 import static org.junit.Assert.*;
 
@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+
+import com.ucc.dc.servlets.InsertTask;
 
 public class InsertTaskTest extends Mockito{
 
