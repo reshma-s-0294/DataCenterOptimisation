@@ -23,8 +23,8 @@ public class InsertTaskTest extends Mockito{
 		HttpServletRequest request = mock(HttpServletRequest.class);       
         HttpServletResponse response = mock(HttpServletResponse.class);    
 
-        when(request.getParameter("name")).thenReturn("task99");
-        when(request.getParameter("deadline")).thenReturn("1");
+        when(request.getParameter("type")).thenReturn("web");
+        when(request.getParameter("deadline")).thenReturn("2000");
 
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
@@ -32,7 +32,7 @@ public class InsertTaskTest extends Mockito{
 
         new InsertTask().doPost(request, response);
 
-        verify(request, atLeast(1)).getParameter("name"); // only if you want to verify username was called...
+        verify(request, atLeast(1)).getParameter("type"); // only if you want to verify username was called...
         writer.flush(); // it may not have been flushed yet...
         assertTrue(stringWriter.toString().contains("serverId"));
 	}

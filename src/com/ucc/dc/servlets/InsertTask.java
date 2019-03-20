@@ -53,17 +53,26 @@ public class InsertTask extends HttpServlet {
 		TaskResponse tr = new TaskResponse();
 		
 		request.setAttribute("taskAddedToQueue","Task Successfully added to Job Queue.... Please wait will analyzer searches for optimal server..!!");
-		processRequest(request, response);
-		//forwardRequest(request, response, "/index.jsp");
-		TaskService service = new TaskService();
-		ArrayList<Task> pTasks = service.processTasks();
-		for(Task task : pTasks) {
-			if(task.getTaskId() == id) {
-				System.out.println("Task:" + task);
-				tr.setServerId(task.getServerId());
-				break;
+		boolean isValidInput = validateInputs(request);
+		// if input is valid only then process request 
+		if (isValidInput) {
+			processRequest(request, response);
+			//forwardRequest(request, response, "/index.jsp");
+			TaskService service = new TaskService();
+			ArrayList<Task> pTasks = service.processTasks();
+			for(Task task : pTasks) {
+				if(task.getTaskId() == id) {
+					System.out.println("Task:" + task);
+					Integer serverId = task.getServerId();
+					if (serverId != null) {
+						tr.setServerId(serverId);
+						tr.setReject(false);
+					}
+					break;
+				}
 			}
 		}
+		
 		PrintWriter pw = response.getWriter();
 		response.setContentType("application/json");
 		pw.print(tr);
@@ -106,7 +115,9 @@ public class InsertTask extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Task task = new Task(request.getParameter("name"),Integer.parseInt( request.getParameter("deadline")));
+		Task.taskTypes taskType = Task.taskTypes.valueOf(request.getParameter("type").toUpperCase());
+		
+		Task task = new Task("Task",Integer.parseInt( request.getParameter("deadline")), taskType);
 		TaskDao taskDao = new TaskDao();
 		Calendar calendar = Calendar.getInstance();
 		Timestamp currentTimestamp = new Timestamp(calendar.getTime().getTime());
@@ -114,6 +125,50 @@ public class InsertTask extends HttpServlet {
 		task.setProcessed(false);
 		id = taskDao.insertTask(task);
 		
+	}
+	
+	protected boolean validateInputs(HttpServletRequest request) {
+		boolean isValidType = false, isValidDeadline;
+		
+		// validate type input
+		String type = request.getParameter("type");
+		System.out.println("Type:" + type);
+		for (Task.taskTypes t : Task.taskTypes.values()) {
+			if (t.name().equalsIgnoreCase(type)) {
+				isValidType = true;
+				break;
+			}
+		}
+		System.out.println("is valid type:" + isValidType);
+		
+		// validate deadline input
+		String deadlineStr = request.getParameter("deadline");
+		System.out.println("deadline: " + deadlineStr);
+		if (isInteger(deadlineStr)) {
+			int deadline = Integer.parseInt(deadlineStr);
+			if (deadline >= 1000 && deadline <= 900000) {
+	        	isValidDeadline = true;
+	        } else  {
+	        	isValidDeadline = false;
+	        }
+		} else {
+			isValidDeadline = false;
+		}
+		System.out.println("Is valid deadline: " + isValidDeadline);
+		
+		return (isValidType && isValidDeadline);
+	}
+	
+	public static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    // only got here if we didn't return false
+	    return true;
 	}
 	
 protected void processTask() {

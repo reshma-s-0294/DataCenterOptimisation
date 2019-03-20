@@ -16,7 +16,7 @@ public class TaskDao {
 	Connection connection = dbManager.getConnection();
 	
 	public int insertTask(Task task) {
-		String query = "insert into task(task_name, arrival_time, deadline, processed) values(?,?,?,?)";
+		String query = "insert into task(task_name, arrival_time, deadline, processed, task_type) values(?,?,?,?,?)";
 		int id = 0;
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -24,6 +24,7 @@ public class TaskDao {
 			preparedStatement.setTimestamp(2, task.getArrivalTime());
 			preparedStatement.setInt(3, task.getDeadline());
 			preparedStatement.setBoolean(4, task.isProcessed());
+			preparedStatement.setString(5, task.getType().toString());
 			preparedStatement.executeUpdate();
 			
 			String idQuery = "select task_id from task order by task_id desc limit 1";
@@ -50,7 +51,8 @@ public class TaskDao {
 				String name = resultSet.getString(2);
 				int deadline = resultSet.getInt(3);
 				Timestamp arrival = resultSet.getTimestamp(5);
-				Task task = new Task(name, deadline);
+				Task.taskTypes type = Task.taskTypes.valueOf(resultSet.getString(7));
+				Task task = new Task(name, deadline, type);
 				task.setTaskId(id);
 				task.setArrivalTime(arrival);
 				taskList.add(task);

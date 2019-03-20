@@ -11,11 +11,18 @@ public class Task implements Comparable<Task>{
 	private int serverId;
 	private Timestamp arrivalTime;
 	private boolean processed;
+	private taskTypes type;
 	
-	public Task(String taskName, int deadline) {
+	
+	public static enum taskTypes{
+		WEB, DATA, COMPUTATIONAL, NETWORK
+	}
+	
+	public Task(String taskName, int deadline, taskTypes type) {
 		super();
 		this.taskName = taskName;
 		this.deadline = deadline;
+		this.type = type;
 	}
 	
 	public int getTaskId() {
@@ -57,10 +64,21 @@ public class Task implements Comparable<Task>{
 		this.processed = processed;
 	}
 
+	
+
+	public taskTypes getType() {
+		return type;
+	}
+
+	public void setType(taskTypes type) {
+		this.type = type;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", deadline=" + deadline + ", serverId=" + serverId
-				+ ", arrivalTime=" + arrivalTime + ", processed=" + processed + "]";
+				+ ", arrivalTime=" + arrivalTime + ", processed=" + processed + ", type=" + type + "]";
 	}
 
 	@Override
