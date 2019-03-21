@@ -23,7 +23,7 @@ public class TaskResponse {
 	}
 	@Override
 	public String toString() {
-		return "TaskResponse {\"serverId\" :" + serverId + ", \"isReject\" : " + isReject + "}";
+		return "{\"serverId\" :" + serverId + ", \"isReject\" : " + isReject + "}";
 	}
 	
 	
