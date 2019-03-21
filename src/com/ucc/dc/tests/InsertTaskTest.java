@@ -44,7 +44,7 @@ public class InsertTaskTest extends Mockito{
         new InsertTask().doPost(request, response);
 
         verify(request, atLeast(1)).getParameter("type");
-        writer.flush(); // it may not have been flushed yet...
+        writer.flush(); 
         
         JSONObject actual = new JSONObject(stringWriter.toString());
         JSONAssert.assertEquals("{isReject:false}", actual, false);
@@ -131,6 +131,64 @@ public class InsertTaskTest extends Mockito{
         new InsertTask().doPost(request, response);
 
         verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+	}
+	/**
+	 * Test case for invalid input data for deadline (>=900000) and valid data for server type
+	 * 
+	 * by
+	 * Adarsh Bhat
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithHighInvalidDeadline() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("data");
+        when(request.getParameter("deadline")).thenReturn("900001");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+	}
+	/**
+	 * Test case for invalid input data for deadline (>=900000) and invalid type for server type
+	 * 
+	 * by
+	 * Adarsh Bhat
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithHighInvalidDeadlineAndType() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("undefined");
+        when(request.getParameter("deadline")).thenReturn("900001");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        //verify(request, atLeast(1)).getParameter("type");
         writer.flush();
         
         JSONObject actual = new JSONObject(stringWriter.toString());
