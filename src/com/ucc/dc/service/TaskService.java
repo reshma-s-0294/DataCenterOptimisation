@@ -65,5 +65,13 @@ public class TaskService {
 		return processedTasks;
 
 	}
+	
+	public void resetUtilizationAndCapacity() {
+		ArrayList<Server> servers = serverDao.getServers();
+		for(Server server : servers) {
+			server.setUtilization(0);
+			server.setCapacity(0);
+		}
+	}
 
 }
