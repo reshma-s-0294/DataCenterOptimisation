@@ -71,6 +71,7 @@ public class TaskService {
 		for(Server server : servers) {
 			server.setUtilization(0);
 			server.setCapacity(0);
+			serverDao.decreaseUtilizationAndCapacity(server);
 		}
 	}
 

@@ -60,6 +60,7 @@ public class TaskServiceTest extends Mockito{
 		for(Server server : servers) {
 			server.setUtilization(70);
 			server.setCapacity(120);
+			serverDao.decreaseUtilizationAndCapacity(server);
 		}
 		
 		assertTrue(expected == service.assignTask(task));

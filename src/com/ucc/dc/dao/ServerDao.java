@@ -60,6 +60,21 @@ public class ServerDao {
 			// TODO: handle exception
 		}
 	}
+	
+	public void decreaseUtilizationAndCapacity(Server server) {
+		String query = "update server set utilization = ?, capacity = ? where id = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getUtilization());
+			preparedStatement.setInt(2, server.getCapacity());
+			preparedStatement.setInt(3, server.getId());
+			
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 	/*public ServerStack getServerStack(int serverId) {
 		
