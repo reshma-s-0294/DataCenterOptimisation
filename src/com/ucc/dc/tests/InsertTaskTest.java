@@ -37,7 +37,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithValidInputData() throws IOException, ServletException {
+	public void testDoPostWithValidInputDataTypeWeb() throws IOException, ServletException {
 		//fail("Not yet implemented");
 
 		HttpServletRequest request = mock(HttpServletRequest.class);
@@ -61,13 +61,13 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with valid input data (value < 1000) for deadline and valid data for type parameters
 	 *
-	 * by Pooja
+	 * by Reshma
 	 *
 	 * @throws IOException
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithHighBoundaryValidDeadlineValue() throws IOException, ServletException {
+	public void testDoPostWithHighBoundaryValidDeadlineValueTypeWeb() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -89,13 +89,13 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with boundary input value (900001) for deadline and valid data for type parameters
 	 *
-	 * by Pooja
+	 * by Reshma
 	 *
 	 * @throws IOException
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithHighBoundaryInvalidDeadline() throws IOException, ServletException {
+	public void testDoPostWithHighInvalidDeadlineTypeWeb() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -115,6 +115,34 @@ public class InsertTaskTest extends Mockito{
         JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
 	}
 	/**
+	 * Test case with boundary input value (900000) for deadline and valid data for type parameters
+	 *
+	 * by Reshma
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithHighBoundaryInvalidDeadlineTypeWeb() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("web");
+        when(request.getParameter("deadline")).thenReturn("900000");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
+	/**
 	 * Test case with invalid input data (value < 1000) for deadline and valid data for type parameters
 	 *
 	 * by Suvarna Somavanshi
@@ -123,7 +151,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithLowInvalidDeadline_2() throws IOException, ServletException {
+	public void testDoPostWithLowInvalidDeadlineTypeWeb() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -145,13 +173,13 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with boundary input value (999) for deadline and valid data for type parameters
 	 *
-	 * by Reshma Surendran
+	 * by Suvarna Somavanshi
 	 *
 	 * @throws IOException
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithLowBoundaryInvalidDeadline() throws IOException, ServletException {
+	public void testDoPostWithLowBoundaryInvalidDeadlineTypeData() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -171,15 +199,43 @@ public class InsertTaskTest extends Mockito{
         JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
 	}
 	/**
-	 * Test case with invalid input data (value < 1000) for deadline and valid data for type parameters
+	 * Test case with boundary input value (1000) for deadline and valid data for type parameters
 	 *
-	 * by Reshma Surendran
+	 * by Suvarna Somavanshi
 	 *
 	 * @throws IOException
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithLowInvalidDeadline() throws IOException, ServletException {
+	public void testDoPostWithLowBoundaryValidDeadlineTypeData() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("data");
+        when(request.getParameter("deadline")).thenReturn("1000");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
+	/**
+	 * Test case with invalid input data (value < 1000) for deadline and valid data for type parameters
+	 *
+	 * by Suvarna Somavanshi
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithLowInvalidDeadlineTypeData() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -208,7 +264,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithHighInvalidDeadline() throws IOException, ServletException {
+	public void testDoPostWithHighInvalidDeadlineTypeData() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -227,17 +283,46 @@ public class InsertTaskTest extends Mockito{
         JSONObject actual = new JSONObject(stringWriter.toString());
         JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
 	}
+	/**
+	 * Test case for invalid input data for deadline (900000) and valid data for server type
+	 * 
+	 * by
+	 *Adarsh Bhat
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithHighBoundaryValueValidDeadlineTypeData() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("data");
+        when(request.getParameter("deadline")).thenReturn("900000");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
 	
 	/**
 	 * Test case with valid input data for type and deadline parameters
 	 *
-	 * by Pooja
+	 * by Adarsh Bhat
 	 *
 	 * @throws IOException
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithValidInputData_2() throws IOException, ServletException {
+	public void testDoPostWithValidInputDataTypeData() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -260,7 +345,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with invalid input data (undefined enum) for type and valid data for deadline parameters
 	 *
-	 * by Reshma Surendran
+	 * by Adarsh Bhat
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -294,7 +379,7 @@ public class InsertTaskTest extends Mockito{
 	 * Test case for invalid input data for deadline (>900000) and invalid type for server type
 	 * 
 	 * by
-	 * Adarsh Bhat
+	 * Freda Pinto
 	 * 
 	 * @throws IOException
 	 * @throws ServletException
@@ -325,7 +410,8 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with invalid input data (undefined enum) for type and deadline parameters
 	 *
-	 * by Pooja
+	 * by 
+	 * 	 Freda Pinto
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -355,7 +441,8 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with invalid input data (undefined enum) for type and valid data for deadline parameters
 	 *
-	 * by Suvarna Somavanshi
+	 * by 
+	 	 * Freda Pinto
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -383,7 +470,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with valid input data for type and deadline parameters
 	 *
-	 * by Suvarna Somavanshi
+	 * Freda Pinto
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -410,9 +497,67 @@ public class InsertTaskTest extends Mockito{
         JSONAssert.assertEquals("{isReject:false}", actual, false);
 	}
 	/**
+	 * Test case with valid low boundary input data for deadline parameters type network
+	 *
+	 * by Bhargavi 
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithLowBoundaryNetworkValidInputData() throws IOException, ServletException {
+		//fail("Not yet implemented");
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("network");
+        when(request.getParameter("deadline")).thenReturn("1000");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush(); // it may not have been flushed yet...
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
+	/**
+	 * Test case with valid low boundary input data for deadline parameters type network
+	 *
+	 *  by Bhargavi 
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithHighBoundaryNetworkValidInputData() throws IOException, ServletException {
+		//fail("Not yet implemented");
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("network");
+        when(request.getParameter("deadline")).thenReturn("900000");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush(); // it may not have been flushed yet...
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
+	/**
 	 * Test case with Invalid input data for type and deadline parameters
 	 *
-	 * by Rohit 
+	 * by Bhargavi 
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -441,7 +586,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with Invalid input data for type and deadline parameters
 	 *
-	 * by Rohit 
+	 * by Bhargavi 
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -470,7 +615,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with Invalid input data for type and deadline parameters
 	 *
-	 * by Rohit 
+	 * by Bhargavi 
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -500,7 +645,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with boundary input value (900000) for deadline and valid data for type parameters
 	 *
-	 * by Suvarna Somavanshi
+	 * by Pooja
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -510,7 +655,7 @@ public class InsertTaskTest extends Mockito{
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("type")).thenReturn("computaional");
+        when(request.getParameter("type")).thenReturn("computational");
         when(request.getParameter("deadline")).thenReturn("900000");
 
         StringWriter stringWriter = new StringWriter();
@@ -523,12 +668,12 @@ public class InsertTaskTest extends Mockito{
         writer.flush();
         
         JSONObject actual = new JSONObject(stringWriter.toString());
-        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
 	}
 	/**
 	 * Test case with invalid input value (undefined) for deadline and valid data for type parameters
 	 *
-	 * by Rohit
+	 * by Pooja
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -538,7 +683,7 @@ public class InsertTaskTest extends Mockito{
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("type")).thenReturn("computaional");
+        when(request.getParameter("type")).thenReturn("computational");
         when(request.getParameter("deadline")).thenReturn("undefined");
 
         StringWriter stringWriter = new StringWriter();
@@ -556,7 +701,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with invalid input value (0) for deadline and valid data for type parameters
 	 *
-	 * by Rohit 
+	 * by Pooja
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -566,7 +711,7 @@ public class InsertTaskTest extends Mockito{
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("type")).thenReturn("computaional");
+        when(request.getParameter("type")).thenReturn("computational");
         when(request.getParameter("deadline")).thenReturn("0");
 
         StringWriter stringWriter = new StringWriter();
@@ -584,7 +729,7 @@ public class InsertTaskTest extends Mockito{
 	/**
 	 * Test case with boundary input value (1000) for deadline and valid data for type parameters
 	 *
-	 * by Rohit
+	 * by Pooja
 	 *
 	 * @throws IOException
 	 * @throws ServletException
@@ -594,8 +739,65 @@ public class InsertTaskTest extends Mockito{
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getParameter("type")).thenReturn("computaional");
+        when(request.getParameter("type")).thenReturn("computational");
         when(request.getParameter("deadline")).thenReturn("1000");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
+	/**
+	 * Test case with boundary input value (1000) for deadline and valid data for type parameters
+	 *
+	 * by Rohit
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithValidDeadlineTypeNetwork() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("computational");
+        when(request.getParameter("deadline")).thenReturn("3500");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:false}", actual, false);
+	}
+	/**
+	 * Test case for negative input data for deadline (<0) and valid data for server type
+	 * 
+	 * by
+	 * Rohit
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithNegativeDeadlineTypeUndefined() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("undefined");
+        when(request.getParameter("deadline")).thenReturn("-1");
 
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
@@ -609,7 +811,122 @@ public class InsertTaskTest extends Mockito{
         JSONObject actual = new JSONObject(stringWriter.toString());
         JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
 	}
+	/**
+	 * Test case for negative input data for deadline (<0) and valid data for server type
+	 * 
+	 * by
+	 * Rohit
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithNegativeDeadlineTypeData() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
 
+        when(request.getParameter("type")).thenReturn("data");
+        when(request.getParameter("deadline")).thenReturn("-1");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+	}
+	/**
+	 * Test case for negative input data for deadline (<0) and valid data for server type
+	 * 
+	 * by
+	 * Reshma 
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithNegativeDeadlineTypeWeb() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("web");
+        when(request.getParameter("deadline")).thenReturn("-1");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+	}
+	/**
+	 * Test case for negative input data for deadline (<0) and valid data for server type
+	 * 
+	 * by
+	 * Rohit
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithNegativeDeadlineTypeNetwork() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("network");
+        when(request.getParameter("deadline")).thenReturn("-1");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+	}
+	/**
+	 * Test case for negative input data for deadline (<0) and valid data for server type
+	 * 
+	 * by
+	 * Pooja
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Test
+	public void testDoPostWithNegativeDeadlineTypComputation() throws IOException, ServletException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("type")).thenReturn("computational");
+        when(request.getParameter("deadline")).thenReturn("-1");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        new InsertTask().doPost(request, response);
+
+        verify(request, atLeast(1)).getParameter("type");
+        writer.flush();
+        
+        JSONObject actual = new JSONObject(stringWriter.toString());
+        JSONAssert.assertEquals("{isReject:true,serverId:-1}", actual, false);
+	}
 	
 	
 }
