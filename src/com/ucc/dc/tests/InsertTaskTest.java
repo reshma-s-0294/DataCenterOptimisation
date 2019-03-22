@@ -385,7 +385,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithHighInvalidDeadlineAndType() throws IOException, ServletException {
+	public void testDoPostWithHighInvalidDeadlineAndTypeUndefined() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -448,7 +448,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithUndefinedTypeValue_2() throws IOException, ServletException {
+	public void testDoPostValidInputValueTypeUndefined() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -476,7 +476,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithValidInputData_3() throws IOException, ServletException {
+	public void testDoPostWithValidInputDataTypeNetwork() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -505,7 +505,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithLowBoundaryNetworkValidInputData() throws IOException, ServletException {
+	public void testDoPostWithLowBoundaryValidTypeNetwork() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -534,7 +534,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithHighBoundaryNetworkValidInputData() throws IOException, ServletException {
+	public void testDoPostWithHighBoundaryValidInputDataNetwork() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -563,7 +563,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithInValidInputData_3() throws IOException, ServletException {
+	public void testDoPostWithLowInValidInputDataNetwork() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -592,7 +592,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithInValidInputData_4() throws IOException, ServletException {
+	public void testDoPostWithUndefinedInputDataNetwork() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -621,7 +621,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithInValidInputData_5() throws IOException, ServletException {
+	public void testDoPostWithHighInValidInputDataNetwork() throws IOException, ServletException {
 		//fail("Not yet implemented");
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -651,7 +651,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithBoundaryValidDeadline_1() throws IOException, ServletException {
+	public void testDoPostWithBoundaryValidDeadlineComputational() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -679,7 +679,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithInValidDeadline_2() throws IOException, ServletException {
+	public void testDoPostWithUndefinedDeadlineTypeComputational() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -707,7 +707,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithInValidDeadline_3() throws IOException, ServletException {
+	public void testDoPostWithInValidDeadlineTypeComputational() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -735,7 +735,7 @@ public class InsertTaskTest extends Mockito{
 	 * @throws ServletException
 	 */
 	@Test
-	public void testDoPostWithBoundaryValidDeadline_4() throws IOException, ServletException {
+	public void testDoPostWithBoundaryValidDeadlineTypeComputational() throws IOException, ServletException {
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
