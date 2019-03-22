@@ -1,7 +1,5 @@
 package com.ucc.dc.tests;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -21,6 +20,14 @@ import com.ucc.dc.servlets.InsertTask;
 
 public class InsertTaskTest extends Mockito{
 
+	@Before
+	public void setUp() throws Exception {
+		// resetting utilization and capacity data in db to ensure test cases pass.
+		// Ideally these parameters would be updated based on constant monitoring of the servers
+		TaskService service = new TaskService();
+		service.resetUtilizationAndCapacity();
+	}
+	
 	/**
 	 * Test case with valid input data for type and deadline parameters
 	 *
@@ -32,11 +39,7 @@ public class InsertTaskTest extends Mockito{
 	@Test
 	public void testDoPostWithValidInputData() throws IOException, ServletException {
 		//fail("Not yet implemented");
-		// resetting utilization and capacity data in db to ensure test cases pass.
-		// Ideally these parameters would be updated based on constant monitoring of the servers
-		TaskService service = new TaskService();
-		service.resetUtilizationAndCapacity();
-		
+
 		HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
