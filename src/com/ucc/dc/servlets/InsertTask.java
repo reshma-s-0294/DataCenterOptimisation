@@ -128,35 +128,37 @@ public class InsertTask extends HttpServlet {
 	}
 	
 	protected boolean validateInputs(HttpServletRequest request) {
-		boolean isValidType = false, isValidDeadline;
+		boolean isValidType = false;
+		boolean returnValue, isValidDeadline;
 		
 		// validate type input
 		String type = request.getParameter("type");
-		System.out.println("Type:" + type);
 		for (Task.taskTypes t : Task.taskTypes.values()) {
 			if (t.name().equalsIgnoreCase(type)) {
 				isValidType = true;
 				break;
 			}
 		}
-		System.out.println("is valid type:" + isValidType);
 		
-		// validate deadline input
-		String deadlineStr = request.getParameter("deadline");
-		System.out.println("deadline: " + deadlineStr);
-		if (isInteger(deadlineStr)) {
-			int deadline = Integer.parseInt(deadlineStr);
-			if (deadline >= 1000 && deadline <= 900000) {
-	        	isValidDeadline = true;
-	        } else  {
-	        	isValidDeadline = false;
-	        }
+		if (isValidType == false) {
+			returnValue = false;
 		} else {
-			isValidDeadline = false;
+			// validate deadline input
+			String deadlineStr = request.getParameter("deadline");
+			if (isInteger(deadlineStr)) {
+				int deadline = Integer.parseInt(deadlineStr);
+				if (deadline >= 1000 && deadline <= 900000) {
+		        	isValidDeadline = true;
+		        } else  {
+		        	isValidDeadline = false;
+		        }
+			} else {
+				isValidDeadline = false;
+			}
+			returnValue = isValidDeadline;
 		}
-		System.out.println("Is valid deadline: " + isValidDeadline);
 		
-		return (isValidType && isValidDeadline);
+		return returnValue;
 	}
 	
 	public static boolean isInteger(String s) {
