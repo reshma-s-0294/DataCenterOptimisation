@@ -127,7 +127,7 @@ public class InsertTask extends HttpServlet {
 		
 	}
 	
-	protected boolean validateInputs(HttpServletRequest request) {
+	public boolean validateInputs(HttpServletRequest request) {
 		boolean isValidType = false;
 		boolean returnValue, isValidDeadline;
 		
