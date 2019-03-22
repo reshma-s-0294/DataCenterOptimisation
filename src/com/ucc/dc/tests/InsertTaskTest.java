@@ -436,7 +436,7 @@ public class InsertTaskTest extends Mockito{
         writer.flush(); // it may not have been flushed yet...
         
         JSONObject actual = new JSONObject(stringWriter.toString());
-        JSONAssert.assertEquals("{isReject:false}", actual, false);
+        JSONAssert.assertEquals("{isReject:true}", actual, false);
 	}
 	/**
 	 * Test case with Invalid input data for type and deadline parameters
@@ -465,7 +465,7 @@ public class InsertTaskTest extends Mockito{
         writer.flush(); // it may not have been flushed yet...
         
         JSONObject actual = new JSONObject(stringWriter.toString());
-        JSONAssert.assertEquals("{isReject:false}", actual, false);
+        JSONAssert.assertEquals("{isReject:true}", actual, false);
 	}
 	/**
 	 * Test case with Invalid input data for type and deadline parameters
@@ -494,7 +494,7 @@ public class InsertTaskTest extends Mockito{
         writer.flush(); // it may not have been flushed yet...
         
         JSONObject actual = new JSONObject(stringWriter.toString());
-        JSONAssert.assertEquals("{isReject:false}", actual, false);
+        JSONAssert.assertEquals("{isReject:true}", actual, false);
 	}
 
 	/**
