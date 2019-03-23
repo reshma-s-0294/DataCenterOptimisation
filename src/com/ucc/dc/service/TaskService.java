@@ -61,7 +61,7 @@ public class TaskService {
 			}
 			System.out.println("Tasks assigned");
 		}
-		System.out.println("This is lenght of task in service: "+processedTasks.size());
+		System.out.println("Unassigned tasks:" + unassignedTasks);
 		return processedTasks;
 
 	}
