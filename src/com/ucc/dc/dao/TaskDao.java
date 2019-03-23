@@ -8,7 +8,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ucc.dc.models.ServerStack;
 import com.ucc.dc.models.Task;
+import com.ucc.dc.models.Task.taskTypes;
 
 public class TaskDao {
 	
@@ -104,4 +106,37 @@ public class TaskDao {
 		}
 	}
 
+	public Task getTaskFromId(int taskId) {
+		String query = "select * from task where task_id = ?";
+		Task task = null;
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, taskId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				int id = resultSet.getInt(1);
+				String name = resultSet.getString(2);
+				int deadline = resultSet.getInt(3);
+				int serverId = resultSet.getInt(4);
+				Timestamp arrivalTime = resultSet.getTimestamp(5);
+				boolean processed = resultSet.getBoolean(6);
+				Task.taskTypes type = taskTypes.valueOf(resultSet.getString(7));
+				task = new Task(name, deadline, type);
+				task.setTaskId(id);
+				task.setServerId(serverId);
+				task.setProcessed(processed);
+				task.setArrivalTime(arrivalTime);
+				
+				return task;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return task;
+	}
 }
