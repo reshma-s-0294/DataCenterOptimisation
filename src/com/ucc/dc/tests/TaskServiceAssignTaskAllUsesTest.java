@@ -190,7 +190,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 	
 	
 	
-	
+	@Test
 	public void inputInRangeTest() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -204,6 +204,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		
 	}
 	
+	@Test
 	public void utilOutOfRange() {
 		
 		ServerStackDao serverStackDao = new ServerStackDao();
@@ -217,6 +218,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		service.resetUtilizationAndCapacity();
 	}
 	
+	@Test
 	public void capacityOutOfRange() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -229,6 +231,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		service.resetUtilizationAndCapacity();
 	}
 	
+	@Test
 	public void utilAndCapacityOOR() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -241,6 +244,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		service.resetUtilizationAndCapacity();
 	}
 	
+	@Test
 	public void tempAndUtilInRange() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -253,6 +257,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		
 	}
 	
+	@Test
 	public void tempNotInRange() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -260,11 +265,15 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 			serverDao.decreaseUtilizationAndCapacity(server);
 			serverStackDao.setTemp(server);
 		}
-		assertTrue(false == service.assignTask(task));
+		assertTrue(true == service.assignTask(task));
+		Server server = servers.get(0);
+		Hvac hvac = serverStackDao.getHvacStatus(server);
+		assertTrue(true == hvac.isStatus());
 		service.resetUtilizationAndCapacity();
 		
 	}
 	
+	@Test
 	public void utilNotInRange() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -277,6 +286,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		
 	}
 	
+	@Test
 	public void utilAndTempNotInRange() {
 		ServerStackDao serverStackDao = new ServerStackDao();
 		for(Server server : servers) {
@@ -289,6 +299,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		
 	}
 	
+	@Test
 	public void tempAndCapacityInRange() {
 		
 		ServerStackDao serverStackDao = new ServerStackDao();
@@ -302,6 +313,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		
 	}
 	
+	@Test
 	public void tempOutOfRange() {
 			
 		ServerStackDao serverStackDao = new ServerStackDao();
@@ -310,11 +322,15 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 			serverDao.decreaseUtilizationAndCapacity(server);
 			serverStackDao.setTemp(server);
 		}
-		assertTrue(false == service.assignTask(task));
+		assertTrue(true == service.assignTask(task));
+		Server server = servers.get(0);
+		Hvac hvac = serverStackDao.getHvacStatus(server);
+		assertTrue(true == hvac.isStatus());
 		service.resetUtilizationAndCapacity();
 			
 	}
 	
+	@Test
 	public void capacityNotInRange() {
 			
 		ServerStackDao serverStackDao = new ServerStackDao();
@@ -328,6 +344,7 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 			
 	}
 
+	@Test
 	public void tempAndCapacityNotInRange() {
 		
 		ServerStackDao serverStackDao = new ServerStackDao();

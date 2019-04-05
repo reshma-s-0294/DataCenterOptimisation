@@ -11,8 +11,8 @@ import com.ucc.dc.models.Server;
 
 public class ServerDao {
 	
-	DBManager dbManager = new DBManager();
-	Connection connection = dbManager.getConnection();
+	static DBManager dbManager = new DBManager();
+	static Connection connection = dbManager.getConnection();
 	
 	public ArrayList<Server> getServers(){
 		
