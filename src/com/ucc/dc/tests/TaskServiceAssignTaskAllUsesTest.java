@@ -187,5 +187,158 @@ public class TaskServiceAssignTaskAllUsesTest extends Mockito{
 		hvac = serverStackDao.getHvacStatus(server);
 		assertTrue(false == hvac.isStatus());
 	}
+	
+	
+	
+	
+	public void inputInRangeTest() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(10);
+			server.setCapacity(20);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(true == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
+	
+	public void utilOutOfRange() {
+		
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(130);
+			server.setCapacity(20);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+	}
+	
+	public void capacityOutOfRange() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(20);
+			server.setCapacity(120);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+	}
+	
+	public void utilAndCapacityOOR() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(120);
+			server.setCapacity(120);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+	}
+	
+	public void tempAndUtilInRange() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(20);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(true == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
+	
+	public void tempNotInRange() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(20);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.setTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
+	
+	public void utilNotInRange() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(70);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
+	
+	public void utilAndTempNotInRange() {
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setUtilization(70);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.setTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
+	
+	public void tempAndCapacityInRange() {
+		
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setCapacity(20);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(true == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
+	
+	public void tempOutOfRange() {
+			
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setCapacity(20);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.setTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+			
+	}
+	
+	public void capacityNotInRange() {
+			
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setCapacity(120);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.resetTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+			
+	}
+
+	public void tempAndCapacityNotInRange() {
+		
+		ServerStackDao serverStackDao = new ServerStackDao();
+		for(Server server : servers) {
+			server.setCapacity(120);
+			serverDao.decreaseUtilizationAndCapacity(server);
+			serverStackDao.setTemp(server);
+		}
+		assertTrue(false == service.assignTask(task));
+		service.resetUtilizationAndCapacity();
+		
+	}
 
 }

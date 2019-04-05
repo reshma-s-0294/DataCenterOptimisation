@@ -126,6 +126,20 @@ public class ServerStackDao {
 		}
 	}
 	
+	public void setTemp(Server server) {
+		String query = "update serverstack set temperature = 70 where stackid = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getStackId());
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+	}
+	
+	
 	public void turnOffHVAC(Server server) {
 		String query = "update hvac set status = 0 where serverstack_id = ?";
 		
@@ -138,4 +152,5 @@ public class ServerStackDao {
 			// TODO: handle exception
 		}
 	}
+	
 }
