@@ -61,9 +61,18 @@ public class TaskService {
 			}
 			System.out.println("Tasks assigned");
 		}
-		System.out.println("This is lenght of task in service: "+processedTasks.size());
+		System.out.println("Unassigned tasks:" + unassignedTasks);
 		return processedTasks;
 
+	}
+	
+	public void resetUtilizationAndCapacity() {
+		ArrayList<Server> servers = serverDao.getServers();
+		for(Server server : servers) {
+			server.setUtilization(0);
+			server.setCapacity(0);
+			serverDao.decreaseUtilizationAndCapacity(server);
+		}
 	}
 
 }

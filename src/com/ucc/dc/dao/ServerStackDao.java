@@ -67,6 +67,31 @@ public class ServerStackDao {
 		
 	}
 	
+	public Hvac getHvacStatus(Server server) {
+		Hvac hvac = null;
+		String query = "select * from hvac where serverstack_id = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getStackId());
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				int hvacId = resultSet.getInt(1);
+				int stackId = resultSet.getInt(2);
+				boolean status = resultSet.getBoolean(3);
+				hvac = new Hvac(hvacId, stackId, status);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		return hvac;
+	}
+	
 	public ArrayList<Hvac> getHvacStatus(){
 		String query = "select * from hvac";
 		ArrayList<Hvac> hvacs = new ArrayList<>();
@@ -87,4 +112,45 @@ public class ServerStackDao {
 		return hvacs;
 	}
 
+	// Function to reset temperatures of assumed servers
+	public void resetTemp(Server server) {
+		String query = "update serverstack set temperature = 10 where stackid = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getStackId());
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+	}
+	
+	public void setTemp(Server server) {
+		String query = "update serverstack set temperature = 70 where stackid = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getStackId());
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+	}
+	
+	
+	public void turnOffHVAC(Server server) {
+		String query = "update hvac set status = 0 where serverstack_id = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getStackId());
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+	}
+	
 }

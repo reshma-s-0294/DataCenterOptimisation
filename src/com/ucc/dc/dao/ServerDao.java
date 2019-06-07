@@ -11,8 +11,8 @@ import com.ucc.dc.models.Server;
 
 public class ServerDao {
 	
-	DBManager dbManager = new DBManager();
-	Connection connection = dbManager.getConnection();
+	static DBManager dbManager = new DBManager();
+	static Connection connection = dbManager.getConnection();
 	
 	public ArrayList<Server> getServers(){
 		
@@ -54,6 +54,21 @@ public class ServerDao {
 			preparedStatement.setInt(2, server.getCapacity()+20);
 			preparedStatement.setInt(3, server.getTasksCompleted()+1);
 			preparedStatement.setInt(4, server.getId());
+			
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void decreaseUtilizationAndCapacity(Server server) {
+		String query = "update server set utilization = ?, capacity = ? where id = ?";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, server.getUtilization());
+			preparedStatement.setInt(2, server.getCapacity());
+			preparedStatement.setInt(3, server.getId());
 			
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
